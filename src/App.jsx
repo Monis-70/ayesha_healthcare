@@ -1,4 +1,11 @@
 import { useState, useEffect } from "react";
+// ============================================================
+//  IMPORTANT: To fix dark background on Vercel/Vite:
+//  1. Clear App.css — delete all content or replace with: body{}
+//  2. Clear index.css — delete all content or replace with: body{}
+//  3. In main.jsx, remove: import './index.css'  (optional)
+//  The styles here override everything via the <style> tag.
+// ============================================================
 
 // ============================================================
 //  DUMMY DATA
@@ -171,15 +178,17 @@ export default function App() {
   if(!user) return <LoginPage onLogin={login} toast={toast} w={w}/>;
 
   return (
-    <div style={{ fontFamily:"'Nunito','Segoe UI',sans-serif", minHeight:"100vh", background:"#f8fafc" }}>
+    <div style={{ fontFamily:"'Nunito','Segoe UI',sans-serif", minHeight:"100vh", background:"#f8fafc", color:"#0f172a" }}>
       <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
       <style>{`
-        *{box-sizing:border-box;}
+        *, *::before, *::after { box-sizing: border-box; }
+        html, body, #root { background: #f8fafc !important; color: #0f172a !important; min-height: 100vh; }
+        body { margin: 0; padding: 0; }
+        input, select, textarea { background: #ffffff !important; color: #0f172a !important; }
         @keyframes slideIn{from{transform:translateX(40px);opacity:0}to{transform:none;opacity:1}}
         @keyframes slideUp{from{transform:translateY(100%);opacity:0}to{transform:none;opacity:1}}
         button:active{transform:scale(.97);}
         ::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:#f1f5f9}::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:3px}
-        @media(max-width:640px){.resp-grid-2{grid-template-columns:1fr 1fr!important}.resp-grid-1{grid-template-columns:1fr!important}.resp-hide{display:none!important}}
       `}</style>
 
       {toast && (
@@ -211,45 +220,57 @@ function LoginPage({ onLogin, toast, w }) {
   const fill = r => { setTab(r); setEmail(demos[r].email); setPw(demos[r].password); };
 
   return (
-    <div style={{ minHeight:"100vh", display:"flex", flexDirection:mobile?"column":"row" }}>
+    <div style={{ minHeight:"100vh", display:"flex", flexDirection:mobile?"column":"row", background:"#ffffff" }}>
       <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
-      <style>{`*{box-sizing:border-box;font-family:'Nunito',sans-serif;}`}</style>
+      <style>{`
+        *, *::before, *::after { box-sizing: border-box; }
+        body, #root { background: #ffffff !important; color: #0f172a !important; }
+        input, select, textarea, button { font-family: 'Nunito', sans-serif !important; }
+      `}</style>
 
-      {/* HERO */}
-      <div style={{ flex:mobile?undefined:1, background:"linear-gradient(145deg,#0d9488,#0891b2)", display:"flex", flexDirection:"column", justifyContent:"center", padding:mobile?"32px 24px":"60px 50px", color:"#fff", position:"relative", overflow:"hidden", minHeight:mobile?180:undefined }}>
-        <div style={{ position:"absolute", top:-60, right:-60, width:220, height:220, borderRadius:"50%", background:"#fff1" }}/>
-        <div style={{ position:"absolute", bottom:-40, left:-40, width:160, height:160, borderRadius:"50%", background:"#fff1" }}/>
-        <div style={{ position:"relative" }}>
+      {/* LEFT — HERO */}
+      <div style={{ flex:mobile?undefined:1, background:"linear-gradient(145deg,#0d9488,#0891b2)", display:"flex", flexDirection:"column", justifyContent:"center", padding:mobile?"32px 24px":"60px 50px", color:"#fff", position:"relative", overflow:"hidden", minHeight:mobile?200:undefined }}>
+        <div style={{ position:"absolute", top:-60, right:-60, width:220, height:220, borderRadius:"50%", background:"rgba(255,255,255,0.08)" }}/>
+        <div style={{ position:"absolute", bottom:-40, left:-40, width:160, height:160, borderRadius:"50%", background:"rgba(255,255,255,0.06)" }}/>
+        <div style={{ position:"relative", zIndex:1 }}>
           <div style={{ fontSize:mobile?32:48, marginBottom:4 }}>🏥</div>
-          <h1 style={{ margin:"0 0 6px", fontSize:mobile?26:42, fontWeight:900, letterSpacing:-1 }}>HealthNest</h1>
-          <p style={{ margin:"0 0 16px", opacity:.85, fontSize:mobile?13:15, lineHeight:1.6 }}>Smart Healthcare Management System</p>
+          <h1 style={{ margin:"0 0 6px", fontSize:mobile?26:42, fontWeight:900, letterSpacing:-1, color:"#ffffff" }}>HealthNest</h1>
+          <p style={{ margin:"0 0 16px", opacity:.9, fontSize:mobile?13:15, lineHeight:1.6, color:"#ffffff" }}>Smart Healthcare Management System</p>
           {!mobile && ["🩺 Book appointments with top doctors","📋 View prescriptions anytime","📊 Admin analytics dashboard","🔐 Role-based secure access"].map(f=>(
-            <div key={f} style={{ fontSize:14, opacity:.9, marginBottom:8 }}>{f}</div>
+            <div key={f} style={{ fontSize:14, opacity:.9, marginBottom:10, color:"#ffffff" }}>{f}</div>
           ))}
         </div>
       </div>
 
-      {/* FORM */}
-      <div style={{ width:mobile?"100%":440, display:"flex", alignItems:"center", justifyContent:"center", padding:mobile?"24px 20px 40px":40 }}>
+      {/* RIGHT — FORM */}
+      <div style={{ width:mobile?"100%":460, background:"#ffffff", display:"flex", alignItems:"center", justifyContent:"center", padding:mobile?"28px 20px 48px":48, minHeight:mobile?undefined:"100vh" }}>
         <div style={{ width:"100%", maxWidth:400 }}>
-          <h2 style={{ margin:"0 0 4px", fontSize:mobile?22:26, fontWeight:800, color:"#0f172a" }}>Welcome back 👋</h2>
-          <p style={{ margin:"0 0 20px", color:"#64748b", fontSize:14 }}>Sign in to your account</p>
+          <h2 style={{ margin:"0 0 4px", fontSize:mobile?22:28, fontWeight:800, color:"#0f172a" }}>Welcome back 👋</h2>
+          <p style={{ margin:"0 0 24px", color:"#64748b", fontSize:14 }}>Sign in to your account</p>
 
+          {/* ROLE TABS */}
           <div style={{ display:"flex", gap:6, marginBottom:20, background:"#f1f5f9", borderRadius:12, padding:4 }}>
             {["patient","doctor","admin"].map(r=>(
-              <button key={r} onClick={()=>fill(r)} style={{ flex:1, padding:"8px 0", border:"none", borderRadius:9, background:tab===r?"#fff":"transparent", color:tab===r?"#0d9488":"#64748b", fontWeight:700, fontSize:12, cursor:"pointer", transition:"all .2s", boxShadow:tab===r?"0 1px 4px #0001":"none", textTransform:"capitalize", fontFamily:"inherit" }}>{r}</button>
+              <button key={r} onClick={()=>fill(r)} style={{ flex:1, padding:"9px 0", border:"none", borderRadius:9, background:tab===r?"#ffffff":"transparent", color:tab===r?"#0d9488":"#64748b", fontWeight:700, fontSize:13, cursor:"pointer", transition:"all .2s", boxShadow:tab===r?"0 1px 6px rgba(0,0,0,0.08)":"none", textTransform:"capitalize", fontFamily:"inherit" }}>{r}</button>
             ))}
           </div>
 
-          <div style={{ background:"#f0fdfa", border:"1px solid #99f6e4", borderRadius:10, padding:"9px 13px", marginBottom:16, fontSize:12, color:"#0f766e" }}>
+          <div style={{ background:"#f0fdfa", border:"1px solid #99f6e4", borderRadius:10, padding:"10px 14px", marginBottom:18, fontSize:12, color:"#0f766e" }}>
             ✅ <strong>Demo filled!</strong> Click Sign In as <strong>{tab}</strong>
           </div>
 
-          <Inp label="Email" value={email} onChange={setEmail} type="email" placeholder="you@example.com"/>
-          <Inp label="Password" value={pw} onChange={setPw} type="password" placeholder="••••••••"/>
-          <Btn full onClick={()=>onLogin(email,pw)} style={{ padding:"12px", fontSize:15, marginTop:4 }}>Sign In →</Btn>
+          <div style={{ marginBottom:14 }}>
+            <label style={{ display:"block", fontSize:13, fontWeight:600, color:"#374151", marginBottom:5 }}>Email</label>
+            <input type="email" value={email} onChange={e=>setEmail(e.target.value)} placeholder="you@example.com" style={{ width:"100%", padding:"11px 14px", borderRadius:10, border:"1.5px solid #e2e8f0", fontSize:14, fontFamily:"inherit", color:"#0f172a", background:"#ffffff", outline:"none", boxSizing:"border-box" }}/>
+          </div>
+          <div style={{ marginBottom:20 }}>
+            <label style={{ display:"block", fontSize:13, fontWeight:600, color:"#374151", marginBottom:5 }}>Password</label>
+            <input type="password" value={pw} onChange={e=>setPw(e.target.value)} placeholder="••••••••" style={{ width:"100%", padding:"11px 14px", borderRadius:10, border:"1.5px solid #e2e8f0", fontSize:14, fontFamily:"inherit", color:"#0f172a", background:"#ffffff", outline:"none", boxSizing:"border-box" }}/>
+          </div>
 
-          <div style={{ textAlign:"center", marginTop:18 }}>
+          <button onClick={()=>onLogin(email,pw)} style={{ width:"100%", padding:"13px", borderRadius:12, border:"none", background:"#0d9488", color:"#ffffff", fontWeight:700, fontSize:15, cursor:"pointer", fontFamily:"inherit", boxShadow:"0 4px 14px rgba(13,148,136,0.35)", transition:"all .2s" }}>Sign In →</button>
+
+          <div style={{ textAlign:"center", marginTop:20 }}>
             <span style={{ color:"#64748b", fontSize:13 }}>New patient? </span>
             <button onClick={()=>setReg(true)} style={{ background:"none", border:"none", color:"#0d9488", fontWeight:700, cursor:"pointer", fontSize:13, fontFamily:"inherit" }}>Register here</button>
           </div>
